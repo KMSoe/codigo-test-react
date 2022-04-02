@@ -2,26 +2,32 @@ import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axiosObj from '../../axiosObj';
 
-const Order = ({ token }) => {
+const Order = (props) => {
     const { id } = useParams();
     let [code, setCode] = useState('');
     let [discount, setDiscount] = useState(0);
-    let [, setCodeValid] = useState(false);
-    let [hasPromo] = useState(false);
+    let [codeValid, setCodeValid] = useState(false);
+    let [hasPromo, setHasPromo] = useState(false);
     let [order, setOrder] = useState({});
     const navigate = useNavigate();
 
     useEffect(() => {
-        axiosObj.get(`/orders/${id}`, { headers: { Authorization: `Bearer ${token}` } })
+        // Ask User to have Promotion code and set setHasPromo
+
+        loadOrder(id);
+    }, [id])
+
+    const loadOrder = (id) => {
+        axiosObj.get(`/orders/${id}`, { headers: { Authorization: `Bearer ${props.token}` } })
             .then(({ data }) => {
                 setOrder(data.data);
             })
             .catch(err => console.log(err))
-    }, [id])
+    }
 
     const handleChange = (e) => {
         setCode(e.target.value);
-        axiosObj.get(`/orders/${id}`, { headers: { Authorization: `Bearer ${token}` } })
+        axiosObj.get(`/orders/${id}`, { headers: { Authorization: `Bearer ${props.token}` } })
             .then(({ data }) => {
                 if (data.id) {
                     setCodeValid(true);
@@ -33,7 +39,7 @@ const Order = ({ token }) => {
 
     const submitPromoCode = () => {
         let updatedTotal = order.grant_total - ((order.package.price * discount) / 100);
-        axiosObj.patch(`/orders/${id}`, JSON.stringify({ grant_total: updatedTotal }), { headers: { Authorization: `Bearer ${token}` } })
+        axiosObj.patch(`/orders/${id}`, JSON.stringify({ grant_total: updatedTotal }), { headers: { Authorization: `Bearer ${props.token}` } })
             .then(({ data }) => {
                 setOrder(data.data);
             })
@@ -45,7 +51,7 @@ const Order = ({ token }) => {
     }
 
     const payOrder = () => {
-        axiosObj.post(`/transactions`, JSON.stringify({ order_id: order.id }), { headers: { Authorization: `Bearer ${token}` } })
+        axiosObj.post(`/transactions`, JSON.stringify({ order_id: order.id }), { headers: { Authorization: `Bearer ${props.token}` } })
             .then(({ data }) => {
                 console.log("success");
                 navigate("/packages");
@@ -54,12 +60,13 @@ const Order = ({ token }) => {
     }
 
     return (
+
         <section className="container">
             <div className="card">
                 <div className="card-header">
                     <h6>{"Class Pack Purchase Preview".toUpperCase()}</h6>
                 </div>
-                <div className="card-body px-5 py-3">
+                 <div className="card-body px-5 py-3">
                     <div className="my-4">
                         <b>You have selected:</b>
                     </div>
@@ -77,10 +84,11 @@ const Order = ({ token }) => {
                         <div>
                             <b>${order.grant_total}</b>
                         </div>
-                    </div>
+                    </div> 
                     {hasPromo ?
                         <div className="d-flex col-12 col-md-6 mb-5">
                             <input placeholder="Promotion Code" className="form-control" onChange={handleChange} value={code} />
+                            /* Valid Promotion Code Symbol */
                             <button className="btn btn-info text-white" onClick={submitPromoCode}>APPLY</button>
                         </div> : null}
 

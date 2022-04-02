@@ -30,6 +30,8 @@ function App() {
       .catch(err => {
         setAuth(false);
         setUser(null);
+        setToken(null);
+        localStorage.removeItem('token');
         navigate('/signin');
       })
   }
@@ -43,9 +45,9 @@ function App() {
     <Routes>
       <Route path="/" element={<Navigate replace to="/packages" />} />
       <Route path="/packages" element={<PackageList token={token} />} />
-      <Route path="orders/:id" element={<Order user={user} token={token} />} />
+      <Route path="orders/:id" element={<Order token={token} />} />
 
-      <Route path="signin" element={<Signin user={setUser} auth={setAuth} />} />
+      <Route path="signin" element={<Signin user={setUser} auth={setAuth} token={setToken} />} />
     </Routes>
 
 

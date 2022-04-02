@@ -32,7 +32,8 @@ const Signin = (props) => {
                     localStorage.setItem('expirationDate', expirationDate);
                     props.user(res.data.data.user);
                     props.auth(true);
-                    
+                    props.token(res.data.data.token);
+                    localStorage.setItem('token', res.data.data.token);
                     navigate('/');
                 }
             })
