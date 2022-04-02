@@ -1,0 +1,37 @@
+header {
+  border-bottom: 1px solid #3f3f3f;
+}
+.main-nav {
+  justify-content: space-between;
+  align-items: center;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  transition: background-color 0.4s ease-in-out;
+}
+.main-nav img {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+}
+.hidden {
+  opacity: 0;
+  transition: transform 0.4s, opacity 0.2s;
+}
+.visible {
+  opacity: 1;
+  transition: transform 0.4s, opacity 0.2s;
+}
+.navbar-hide {
+  pointer-events: none;
+  opacity: 0;
+}
+.main-nav ul li .badge {
+  top: -10px;
+}
+@media screen and (max-width: 992px) {
+  .main-nav {
+    height: 60px;
+  }
+}
