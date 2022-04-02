@@ -14,3 +14,10 @@
     color: #fff;
     padding: 10px 15px;
 }
+.pack-img{
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 100px;
+    clip-path: polygon(100% 0, 40% 0, 100% 100%);
+}

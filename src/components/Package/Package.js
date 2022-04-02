@@ -2,6 +2,7 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import "./Package.css";
 import axiosObj from '../../axiosObj';
+import KMSImg from '../../assets/kms.jpg';
 
 const Package = ({ data, token }) => {
     const navigate = useNavigate();
@@ -19,6 +20,7 @@ const Package = ({ data, token }) => {
         <div className="col-4 card mb-1" onClick={() => handleClick(data.id)}>
             <div className="position-relative d-flex flex-column align-items-center m-1 p-3">
                 {data.tags ? <div className="tag">Popular</div> : null}
+                <img src={`http://localhost:8000/storage/packages/${data.image}`} className="pack-img" />
                 <h5 className="mt-5">{data.name}</h5>
                 <div className="circle text-white">{data.total_credit}</div>
                 <div className="pack-detail mt-3">
