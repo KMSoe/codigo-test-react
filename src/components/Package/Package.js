@@ -1,23 +1,18 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import "./Package.css";
-import axiosObj from '../../axiosObj';
-import KMSImg from '../../assets/kms.jpg';
 
-const Package = ({ data, token }) => {
+const Package = ({ data }) => {
     const navigate = useNavigate();
+    
 
     const handleClick = (id) => {
-        axiosObj.post('/orders', JSON.stringify({ package_id: id }), { headers: { Authorization: `Bearer ${token}` } })
-            .then(({data}) => {
-                const order = data.data;
-                navigate(`/orders/${order.id}`);
-
-            })
-            .catch(err => console.log(err))
+        navigate(`/packages/${id}/order`);
     }
+
+    
     return (
-        <div className="col-4 card mb-1" onClick={() => handleClick(data.id)}>
+        <div className="col-12 col-md-6 col-lg-4 card mb-1" onClick={() => handleClick(data.id)}>
             <div className="position-relative d-flex flex-column align-items-center m-1 p-3">
                 {data.tags ? <div className="tag">Popular</div> : null}
                 <img src={`http://localhost:8000/storage/packages/${data.image}`} className="pack-img" />
@@ -33,7 +28,7 @@ const Package = ({ data, token }) => {
                     </div>
                 </div>
             </div>
-
+            
         </div>
     );
 }

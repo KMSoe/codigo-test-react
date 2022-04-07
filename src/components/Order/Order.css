@@ -1,0 +1,9 @@
+.valid-symbol{
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: #12e60b;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+}

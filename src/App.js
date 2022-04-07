@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from "react";
-import "bootstrap/dist/css/bootstrap.css";
-import "bootstrap/dist/js/bootstrap.bundle";
 import './App.css';
 import axiosObj from './axiosObj';
 
@@ -45,7 +43,7 @@ function App() {
     <Routes>
       <Route path="/" element={<Navigate replace to="/packages" />} />
       <Route path="/packages" element={<PackageList token={token} />} />
-      <Route path="orders/:id" element={<Order token={token} />} />
+      <Route path="/packages/:id/order" element={<Order token={token} />} />
 
       <Route path="signin" element={<Signin user={setUser} auth={setAuth} token={setToken} />} />
     </Routes>
