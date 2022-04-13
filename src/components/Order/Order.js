@@ -32,9 +32,9 @@ const Order = (props) => {
     }, [id])
 
     const loadPackage = (id) => {
-        axiosObj.get(`/packages/${id}`, { headers: { Authorization: `Bearer ${props.token}` } })
-            .then(({ data }) => {
-                setPack(data.data);
+        props.loadSelectedPackage(id)
+            .then(data => {
+                setPack(data);
             })
             .catch(err => navigate("/packages"))
     }
@@ -166,8 +166,15 @@ const Order = (props) => {
 }
 const mapStateToProps = state => {
     return {
-        token: state.auth.token
+        selectedPackage: state.pack.selectPackage,
+        token: state.auth.token,
     }
 }
 
-export default connect(mapStateToProps)(Order);
+const mapDispatchToProps = dispatch => {
+    return {
+        loadSelectedPackage: (id) => dispatch(actions.selectPackage(id))
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Order);

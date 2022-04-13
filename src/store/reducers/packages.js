@@ -1,7 +1,8 @@
 import * as actionTypes from '../actions/actionTypes';
 
 const initialState = {
-    packages: []
+    packages: [],
+    selectPackage: null,
 }
 
 const reducer = (state = initialState, action) => {
@@ -10,6 +11,11 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 packages: action.payload.packages
+            }
+        case actionTypes.SELECT_PACKAGE:
+            return {
+                ...state,
+                selectPackage: action.payload.package
             }
         default:
             return state;
