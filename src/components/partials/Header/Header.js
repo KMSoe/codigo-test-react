@@ -2,7 +2,6 @@ import React from 'react';
 import './Header.css';
 import KMSIMG from '../../../assets/kms.jpg';
 import { Link, useNavigate } from 'react-router-dom';
-import axiosObj from '../../../axiosObj';
 import { connect } from 'react-redux'
 import * as actionTypes from '../../../store/actions/index';
 

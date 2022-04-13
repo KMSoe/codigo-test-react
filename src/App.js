@@ -3,53 +3,45 @@ import './App.css';
 import axiosObj from './axiosObj';
 
 import { Route, Routes, Navigate, useNavigate } from "react-router-dom";
+import { connect } from 'react-redux';
 import Header from './components/partials/Header/Header';
 import Signin from './components/Auth/Signin';
 import PackageList from './container/PackageList/PackageList';
 import Order from './components/Order/Order';
+import * as ActionTypes from './store/actions/index';
 
-function App() {
-  let [auth, setAuth] = useState(false);
-  let [user, setUser] = useState(null);
-  let [token, setToken] = useState(localStorage.getItem('token'));
+function App(props) {
   const navigate = useNavigate();
 
   useEffect(() => {
-    tryAutoLogin();
-  }, []);
-
-  const tryAutoLogin = () => {
-    axiosObj.get(`/user`, { headers: { Authorization: `Bearer ${token}` } })
+    props.tryAutoSignin()
       .then(res => {
-        setAuth(true);
-        setUser(res.data.data.user);
-        navigate('/packages')
+        if (res) {
+          navigate('/packages');
+        }
       })
       .catch(err => {
-        setAuth(false);
-        setUser(null);
-        setToken(null);
-        localStorage.removeItem('token');
         navigate('/signin');
       })
-  }
-  const logout = () => {
-    setAuth(false);
-    setUser(null);
-    navigate('/signin');
-  }
+  }, []);
+
   return (<>
     <Header />
     <Routes>
       <Route path="/" element={<Navigate replace to="/packages" />} />
-      <Route path="/packages" element={<PackageList token={token} />} />
-      <Route path="/packages/:id/order" element={<Order token={token} />} />
+      <Route path="/packages" element={<PackageList />} />
+      <Route path="/packages/:id/order" element={<Order />} />
 
-      <Route path="signin" element={<Signin user={setUser} auth={setAuth} token={setToken} />} />
+      <Route path="signin" element={<Signin />} />
     </Routes>
-
 
   </>);
 }
 
-export default App;
+const mapDispatchToProps = dispatch => {
+  return {
+    tryAutoSignin: () => dispatch(ActionTypes.tryAutoSignin())
+  }
+}
+
+export default connect(null, mapDispatchToProps)(App);
