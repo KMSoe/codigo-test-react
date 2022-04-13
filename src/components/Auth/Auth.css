@@ -1,6 +1,9 @@
-.input{
-    border: 0 !important;
-    outline: 0 !important;
-    border-radius: 0 !important;
-    border-bottom: 1px solid #928f8f !important;
+.input {
+  border: 0 !important;
+  outline: 0 !important;
+  border-radius: 0 !important;
+  border-bottom: 1px solid #928f8f !important;
+}
+.auth-btn {
+  background-color: #db0ae2 !important;
 }

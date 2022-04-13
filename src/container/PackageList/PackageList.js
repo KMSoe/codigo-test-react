@@ -6,7 +6,7 @@ const List = (props) => {
     let [packages, setPackages] = useState([]);
 
     useEffect(() => {
-        axiosObj.get(`http://localhost:8000/api/packages`, { headers: { Authorization: `Bearer ${props.token}` } })
+        axiosObj.get(`/packages`, { headers: { Authorization: `Bearer ${props.token}` } })
             .then(({ data }) => {
                 setPackages(data.data.pack_list);
             })

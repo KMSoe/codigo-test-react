@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import './App.css';
 import axiosObj from './axiosObj';
 
-import { BrowserRouter as Router, Route, Routes, Navigate, useNavigate } from "react-router-dom";
+import { Route, Routes, Navigate, useNavigate } from "react-router-dom";
 import Header from './components/partials/Header/Header';
 import Signin from './components/Auth/Signin';
 import PackageList from './container/PackageList/PackageList';
@@ -19,7 +19,7 @@ function App() {
   }, []);
 
   const tryAutoLogin = () => {
-    axiosObj.get(`http://localhost:8000/api/user`, { headers: { Authorization: `Bearer ${token}` } })
+    axiosObj.get(`/user`, { headers: { Authorization: `Bearer ${token}` } })
       .then(res => {
         setAuth(true);
         setUser(res.data.data.user);

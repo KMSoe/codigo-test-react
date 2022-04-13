@@ -8,11 +8,9 @@ import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap/dist/js/bootstrap.bundle";
+import reducer from './store/reducer';
 
-
-const store = createStore((state = [], action) => {
-
-});
+const store = createStore(reducer);
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(<Provider store={store}><BrowserRouter><App /></BrowserRouter></Provider>);

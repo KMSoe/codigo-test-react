@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import classes from "./Auth.css";
 import axiosObj from '../../axiosObj';
+import './Auth.css';
 import { useNavigate } from 'react-router-dom';
+import { connect } from 'react-redux';
+import * as actions from '../../store/actions/index';
 
 const Signin = (props) => {
     const navigate = useNavigate()
@@ -22,7 +24,8 @@ const Signin = (props) => {
     }
     const handleSubmit = (e) => {
         e.preventDefault();
-        axiosObj.post('/login', JSON.stringify({email, password}))
+        // props.login({email, password});
+        axiosObj.post('/login', JSON.stringify({ email, password }))
             .then(res => {
                 if (res.status === 200) {
                     const tokenLife = res.data.data.life ? res.data.data.life : 1000 * 60 * 60 * 24 * 15;
@@ -76,5 +79,9 @@ const Signin = (props) => {
         </section>
     );
 }
-
+// const mapDispatchToProps = (dispatch) => {
+//     return {
+//         login: (formData) => dispatch(actions.login(formData))
+//     }
+// }
 export default Signin;
