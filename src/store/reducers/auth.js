@@ -1,15 +1,32 @@
 import * as actionTypes from '../actions/actionTypes';
 
 const initialState = {
-    packages: []
+    user: null,
+    token: localStorage.getItem('token'),
+    authenticated: false,
+    signinError: [],
+    signupError: [],
 }
 
 const reducer = (state = initialState, action) => {
     switch (action.type) {
-        case actionTypes.LOAD_PACKAGES:
+        case actionTypes.SIGNIN_SUCCESS:
             return {
                 ...state,
-                packages: action.payload
+                user: action.payload.user,
+                authenticated: action.payload.authenticated,
+                user: action.payload.user,
+            }
+        case actionTypes.SIGNIN_FAIL:
+            return {
+                ...state,
+            }
+        case actionTypes.SIGNOUT:
+            return {
+                ...state,
+                user: null,
+                token: null,
+                authenticated: false
             }
         default:
             return state;
