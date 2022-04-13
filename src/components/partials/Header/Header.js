@@ -3,7 +3,7 @@ import './Header.css';
 import KMSIMG from '../../../assets/kms.jpg';
 import { Link, useNavigate } from 'react-router-dom';
 import { connect } from 'react-redux'
-import * as actionTypes from '../../../store/actions/index';
+import * as actions from '../../../store/actions/index';
 
 const Header = (props) => {
     const navigate = useNavigate();
@@ -96,7 +96,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        signout: () => dispatch(actionTypes.signout()),
+        signout: () => dispatch(actions.signout()),
     }
 }
 

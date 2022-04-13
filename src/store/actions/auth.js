@@ -45,7 +45,7 @@ export const tryAutoSignin = () => {
             axiosObj.get(`/user`, { headers: { Authorization: `Bearer ${getState().auth.token}` } })
                 .then(({ data }) => {
                     const user = data.data.user;
-                    const token = data.data.token;
+                    const token = getState().auth.token;
 
                     const expirationDate = localStorage.getItem('expirationDate');
                     const now = new Date();

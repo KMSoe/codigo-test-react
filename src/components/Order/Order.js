@@ -3,6 +3,8 @@ import { useParams, useNavigate, Link } from 'react-router-dom';
 import { Modal, Button } from 'react-bootstrap';
 import axiosObj from '../../axiosObj';
 import "./Order.css";
+import * as actions from '../../store/actions/index';
+import { connect } from 'react-redux';
 
 const Order = (props) => {
     const { id } = useParams();
@@ -162,4 +164,10 @@ const Order = (props) => {
     )
 
 }
-export default Order;
+const mapStateToProps = state => {
+    return {
+        token: state.auth.token
+    }
+}
+
+export default connect(mapStateToProps)(Order);

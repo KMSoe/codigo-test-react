@@ -9,7 +9,7 @@ const reducer = (state = initialState, action) => {
         case actionTypes.LOAD_PACKAGES:
             return {
                 ...state,
-                packages: action.payload
+                packages: action.payload.packages
             }
         default:
             return state;
