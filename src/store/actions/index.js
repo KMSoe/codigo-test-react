@@ -1,2 +1,2 @@
 export { loadPackages } from './packages';
-export {login} from './auth';
+export {signin, signout} from './auth';

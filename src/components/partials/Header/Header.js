@@ -3,16 +3,17 @@ import './Header.css';
 import KMSIMG from '../../../assets/kms.jpg';
 import { Link, useNavigate } from 'react-router-dom';
 import axiosObj from '../../../axiosObj';
+import { connect } from 'react-redux'
+import * as actionTypes from '../../../store/actions/index';
 
 const Header = (props) => {
     const navigate = useNavigate();
 
     const logout = (e) => {
         e.preventDefault();
-        axiosObj.post(`/logout`, {}, { headers: { Authorization: `Bearer ${props.token}` } })
-            .then((res) => {
-                props.logout();
-            })
+        props.signout(props.token).then(res => {
+            navigate('/signin');
+        })
             .catch(err => console.log(err))
     }
     return (
@@ -36,7 +37,7 @@ const Header = (props) => {
                             <b>Codigo</b>
                         </Link>
                     </div>
-                    {props.auth ?
+                    {props.authenticated ?
                         <ul className="nav py-1">
                             <li className="nav-item dropdown">
                                 <a
@@ -85,4 +86,19 @@ const Header = (props) => {
         </header>
     );
 }
-export default Header;
+
+const mapStateToProps = state => {
+    return {
+        authenticated: state.auth.authenticated,
+        user: state.auth.user,
+        token: state.auth.token,
+    }
+}
+
+const mapDispatchToProps = dispatch => {
+    return {
+        signout: () => dispatch(actionTypes.signout()),
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Header);

@@ -11,10 +11,6 @@ const Signin = (props) => {
     let [password, setPassword] = useState('');
     let [errors, setErrors] = useState(null);
 
-    useEffect(() => {
-
-    }, []);
-
     const handleEmail = (e) => {
         setEmail(e.target.value)
     }
@@ -24,27 +20,11 @@ const Signin = (props) => {
     }
     const handleSubmit = (e) => {
         e.preventDefault();
-        // props.login({email, password});
-        axiosObj.post('/login', JSON.stringify({ email, password }))
-            .then(res => {
-                if (res.status === 200) {
-                    const tokenLife = res.data.data.life ? res.data.data.life : 1000 * 60 * 60 * 24 * 15;
-                    const expirationDate = new Date(new Date().getTime() + tokenLife);
-                    localStorage.setItem('token', res.data.data.token);
-                    localStorage.setItem('userId', res.data.id);
-                    localStorage.setItem('expirationDate', expirationDate);
-                    props.user(res.data.data.user);
-                    props.auth(true);
-                    props.token(res.data.data.token);
-                    localStorage.setItem('token', res.data.data.token);
-                    navigate('/');
-                }
-            })
-            .catch(err => {
-                if (err.response) {
-                    setErrors(err.response.data.errors);
-                }
-            })
+        props.login(email, password).then(data => {
+            if(data) {
+                navigate('/packages');
+            }
+        }).catch(err => setErrors(err.errors))
     }
 
     let errorsArr = [];
@@ -79,9 +59,9 @@ const Signin = (props) => {
         </section>
     );
 }
-// const mapDispatchToProps = (dispatch) => {
-//     return {
-//         login: (formData) => dispatch(actions.login(formData))
-//     }
-// }
-export default Signin;
+const mapDispatchToProps = (dispatch) => {
+    return {
+        login: (email, password) => dispatch(actions.signin(email, password))
+    }
+}
+export default connect(null, mapDispatchToProps)(Signin);

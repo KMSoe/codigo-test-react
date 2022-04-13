@@ -15,7 +15,7 @@ const reducer = (state = initialState, action) => {
                 ...state,
                 user: action.payload.user,
                 authenticated: action.payload.authenticated,
-                user: action.payload.user,
+                token: action.payload.token,
             }
         case actionTypes.SIGNIN_FAIL:
             return {

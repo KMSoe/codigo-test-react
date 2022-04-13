@@ -39,7 +39,7 @@ function App() {
     navigate('/signin');
   }
   return (<>
-    <Header auth={auth} user={user} token={token} logout={logout} />
+    <Header />
     <Routes>
       <Route path="/" element={<Navigate replace to="/packages" />} />
       <Route path="/packages" element={<PackageList token={token} />} />
