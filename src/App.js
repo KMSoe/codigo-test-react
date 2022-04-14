@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import './App.css';
-import axiosObj from './axiosObj';
 
 import { Route, Routes, Navigate, useNavigate } from "react-router-dom";
 import { connect } from 'react-redux';
@@ -25,25 +24,15 @@ function App(props) {
       })
   }, []);
 
-  let authProtectedRoutes = null
-
-  if (props.authenticated) {
-    authProtectedRoutes = (<> <Route path="/packages" element={<PackageList />} />
-      <Route path="/packages/:id/order" element={<Order />} /></>
-    )
-  }
-
   return (<>
     <Header />
     <Routes>
+        <Route path="/" element={<Navigate replace to="/packages" />} />
+        <Route path="/packages" element={<PackageList />} />
+        <Route path="/packages/:id/order" element={<Order />} />
 
-      <Route path="/" element={<Navigate replace to="/packages" />} />
-
-      {authProtectedRoutes}
-
-      <Route path="/signin" element={<Signin />} />
-    </Routes>
-
+        <Route path="/signin" element={<Signin />} />
+      </Routes>
   </>);
 }
 

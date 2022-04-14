@@ -60,9 +60,9 @@ const Order = (props) => {
         setDiscount(promo.discount);
     }
 
-    const payOrder = () => {
-        axiosObj.post(`/orders`, JSON.stringify({ package_id: pack.id, grant_total: grantTotal }), { headers: { Authorization: `Bearer ${props.token}` } })
-            .then(({ data }) => {
+    const createOrder = () => {
+        props.createOrder(pack.id, grantTotal)
+            .then((data) => {
                 setOrderFinished(true);
             })
             .catch(err => console.log(err))
@@ -76,7 +76,7 @@ const Order = (props) => {
         </p>
         <div className="d-flex justify-content-between">
             <Link to="/packages">Back</Link>
-            <button className="btn btn-info rounded text-white" onClick={payOrder}>Pay Now</button>
+            <button className="btn btn-info rounded text-white" onClick={createOrder}>Pay Now</button>
         </div>
 
     </div>);
@@ -173,7 +173,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        loadSelectedPackage: (id) => dispatch(actions.selectPackage(id))
+        loadSelectedPackage: (id) => dispatch(actions.selectPackage(id)),
+        createOrder: (packId, grantTotal) => dispatch(actions.createOrder(packId, grantTotal))
     }
 }
 
